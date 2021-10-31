@@ -61,5 +61,5 @@ print(df.head())
 df.reset_index(drop=True,inplace=True)
 
 data= df.to_dict('records')
-coll.remove({})
+#coll.remove({})
 coll.insert_many(data)

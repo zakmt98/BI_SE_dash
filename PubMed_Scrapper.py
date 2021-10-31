@@ -93,11 +93,13 @@ def scrapp_data(keyword):
             # pprint.pprint(soup)
 
             row = get_info(soup,keyword)
-            Articles.append(row)
-            print(row)
+            #Articles.append(row)
+            #print(row)
+            coll.insert_one(row)
+       
     if len(Articles) != 0:
-        coll.insert_many(Articles)
-        print(Articles)
+       """  coll.insert_many(Articles)
+        print(Articles) """
     return idlist
 
 
@@ -138,7 +140,7 @@ def get_info(soup,keyword):
                 initial = auth.find('initials').text
                 author = ",".join([lastname, initial])
 
-            except:
+            except: 
                 author = ""
             authors = author + " " + authors
     except:
