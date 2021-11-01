@@ -47,7 +47,7 @@ def IEEE_scrapper(keywords):
     butan = browser.find_element_by_class_name('export-filter').click()
     time.sleep(2)
     download = browser.find_element_by_class_name('stats-SearchResults_Download').click()
-    time.sleep(8)
+    time.sleep(60)
     browser.get('chrome://downloads')
     time.sleep(5)
     filename = browser.execute_script(

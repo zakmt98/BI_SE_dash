@@ -12,8 +12,9 @@ def springer(keywords):
 
     begin=time.time()
     client = MongoClient('localhost', 27017)
-    db = client.BI_PROJECTS_DB.Springer
-    db1 = client.BI_PROJECTS_DB.timeofexecution
+    col = client['BI_project_db']
+    db = col.springer
+
     
     def already_exist(db,search):
         if db.find({"keywords":search}).count() > 0:
@@ -30,7 +31,7 @@ def springer(keywords):
             browser.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
             params = {'cmd':'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': download_dir}}
             browser.execute("send_command", params)
-        download_dir = "C:\\Users\\Aymane Hasnaoui\\Desktop\\springer"
+        download_dir = "C:\\Users\\zakaria\\Desktop\\springer"
         enable_download_headless(browser, download_dir)
 
 
@@ -66,19 +67,19 @@ def springer(keywords):
             browser.find_element_by_css_selector(".remove-hover").click()
             #time.sleep()
             
-            df = pd.DataFrame(pd.read_csv("C:\\Users\\Aymane Hasnaoui\\Desktop\\springer\\SearchResults.csv"))
+            df = pd.DataFrame(pd.read_csv("C:\\Users\\zakaria\\Desktop\\springer\\SearchResults.csv"))
             df['keywords']=pd.Series([keywords for i in range(len(df.index))])
             df_dict=df.to_dict('records')
             db.insert_many(df_dict)
 
             df.shape
-            os.chdir('C:\\Users\\Aymane Hasnaoui\\Desktop\\springer')
+            os.chdir('C:\\Users\\zakaria\\Desktop\\springer')
             extension = 'csv'
             all_filenames = [i for i in glob.glob('*.{}'.format(extension))]
             # print(len(all_filenames))
             if len(all_filenames)!=0:
                 for f in all_filenames:
-                    filename = os.path.basename(f"C:\\Users\\Aymane Hasnaoui\\Desktop\\springer\\{f}")
+                    filename = os.path.basename(f"C:\\Users\\zakaria\\Desktop\\springer\\{f}")
                     os.remove(f) 
             else:
                 print('file not found')

@@ -62,4 +62,3 @@ def Espacenet_scrapper(keywords):
 
     end=time.time()-begin
     return end
-Espacenet_scrapper('data')

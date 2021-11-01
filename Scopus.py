@@ -13,8 +13,9 @@ def scopus(keywords):
     from selenium.webdriver.chrome.options import Options
     begin=time.time()
     client = MongoClient('localhost', 27017)
-    db = client.BI_PROJECTS_DB.Scopus
-    db1 =client.BI_PROJECTS_DB.timeofexecution
+    col= client['BI_project_db']
+    db = col.Scopus
+   
     def already_exist(db,search):
         if db.find({"keywords":search}).count() > 0:
             return False
@@ -50,7 +51,7 @@ def scopus(keywords):
         time.sleep(8)
         if(NoA>1000):
             NoA=1000
-        df = pd.DataFrame(pd.read_excel(f"C:/Users/Aymane Hasnaoui/Downloads/{NoA}-source-results.xlsx"))
+        df = pd.DataFrame(pd.read_excel(f"C:/Users/zakaria/Downloads/{NoA}-source-results.xlsx"))
         df['keywords']=pd.Series([keywords for i in range(len(df.index))])
         df=df.fillna(value='None')
 
