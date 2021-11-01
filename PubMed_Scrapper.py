@@ -64,6 +64,7 @@ def get_PMID_file(keyword):
 
 
 def scrapp_data(keyword):
+    begin=time.time()
     client = MongoClient('localhost', 27017)
     db = client['BI_project_db']
     coll = db.PubMed_db
@@ -100,7 +101,8 @@ def scrapp_data(keyword):
     if len(Articles) != 0:
        """  coll.insert_many(Articles)
         print(Articles) """
-    return idlist
+    endprocess=time.time()-begin
+    return endprocess
 
 
 def get_info(soup,keyword):

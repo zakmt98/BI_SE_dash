@@ -13,6 +13,7 @@ client = MongoClient('localhost', 27017)
 db = client['BI_project_db']
 coll = db.IEEE_col
 def IEEE_scrapper(keywords):
+    begin=time.time()
     def enable_download_headless(browser, download_dir):
         browser.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
         params = {'cmd': 'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': download_dir}}
@@ -46,20 +47,22 @@ def IEEE_scrapper(keywords):
     butan = browser.find_element_by_class_name('export-filter').click()
     time.sleep(2)
     download = browser.find_element_by_class_name('stats-SearchResults_Download').click()
-    time.sleep(60)
+    time.sleep(8)
     browser.get('chrome://downloads')
     time.sleep(5)
     filename = browser.execute_script(
         "return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('div#content  #file-link').text")
+    csv_path = "C:\\Users\\zakaria\\PycharmProjects\\BI_project\\dataset\\IEEE\\"+filename
+    df=pd.read_csv(csv_path, error_bad_lines=False)
+    
+    df['keyword'] = pd.Series([keywords for x in range(len(df.index))])
+    print(df.head())
+    df.reset_index(drop=True,inplace=True)
+
+    data= df.to_dict('records')
+    #coll.remove({})
+    coll.insert_many(data)
+    endprocess=time.time()-begin
+    return endprocess
 
 
-csv_path = "C:\\Users\\zakaria\\PycharmProjects\\BI_project\\dataset\\IEEE\\"+"export2021.10.21-08.00.07.csv"
-df=pd.read_csv(csv_path, error_bad_lines=False)
-keyword = 'keyword'
-df['keyword'] = pd.Series([keyword for x in range(len(df.index))])
-print(df.head())
-df.reset_index(drop=True,inplace=True)
-
-data= df.to_dict('records')
-#coll.remove({})
-coll.insert_many(data)

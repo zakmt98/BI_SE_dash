@@ -20,4 +20,4 @@ def insert_todata():
     #coll.remove({})
     coll.insert_many(data)
 def USPTO_Scrapper(keyword):
-    pass
+    return 0
