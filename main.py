@@ -1,6 +1,5 @@
 from flask import Flask ,render_template,request
-from flask_wtf import FlaskForm
-from forms import BasicForm
+
 from PubMed_Scrapper import scrapp_data
 from IEEE_Scrapper import IEEE_scrapper
 from USPTO_Scrapper import USPTO_Scrapper

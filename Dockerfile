@@ -1,6 +1,7 @@
-FROM python:3
-WORKDIR /app
-COPY . .
+FROM alpine:latest
+WORKDIR /BI_project
+ADD . /BI_project
+
 RUN pip install -r requirements.txt    
 ENTRYPOINT [ "python" ]
 CMD [ "main.py" ]
