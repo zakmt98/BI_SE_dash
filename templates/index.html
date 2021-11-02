@@ -8,27 +8,29 @@
     <title>Document</title>
 </head>
 <body style="padding-top:10px ;">
-    <div class="form-group col-md-6" style="padding-top:12px ;margin: auto; display: block;border: solid;border-radius: 12px;">
+    <div class="form-group col-md-6" style="padding-top:12px ;margin: auto; display: block;border: solid;border-radius: 12px;border-color:darkgrey;">
     <form action="/Search" method="POST">
-    <div class="form-row">
+    <div class="form-row" >
         <input type="text" name="keyword" class="form-control" placeholder="Search Field"></br>
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-6" style="margin-top: 10px;">
         <input type="checkbox" name="website" value = 1>
         <label>Espace Net</label></br>
         <input type="checkbox" name="website" value = 2>
-        <label>IEEE</label></br>
+        <label>Scopus</label></br>
         <input type="checkbox" name="website" value = 3>
         <label>USPTO</label></br>
     </div>
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-6" style="margin-top: 10px;">
     <input type="checkbox" name="website" value = 4>
     <label>Springer</label></br>
     <input type="checkbox" name="website" value = 5>
-    <label>Scopus</label></br>
+    <label>PubMed</label></br>
     <input type="checkbox" name="website" value = 6>
-    <label>Pub med</label></br>
+    <label>IEEE</label></br>
+    
     </div>
-    <input type="submit" class="btn btn-success" style="margin: auto; display: block;margin-bottom: 10px;">
+    <button type="submit" class="btn btn-info" style="margin: auto; display: block;margin-bottom: 10px;border-radius: 12px;">
+        Search</button>
     </div>
     </form>
 </div>
