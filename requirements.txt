@@ -1,0 +1,11 @@
+bs4
+Flask-WTF
+pandas
+openpyxl
+pymongo
+selenium
+webdriver-manager
+lxml
+flask
+gunicorn
+
