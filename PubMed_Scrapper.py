@@ -36,7 +36,9 @@ def get_PMID_file(keyword):
 
     enable_download_headless(browser, download_dir)
     browser.get(url)
-
+    time.sleep(2)
+    duration = browser.find_element(By.ID,'id_filter_datesearch.y_5').click()
+    time.sleep(2)
     save = browser.find_element(By.ID,'save-results-panel-trigger').click()
     time.sleep(1)
     select = browser.find_element(By.ID,'save-action-selection').click()
@@ -69,14 +71,8 @@ def scrapp_data(keyword):
     db = client['BI_project_db']
     coll = db.PubMed_db
 
-
-
     #keyword = str(input('Please enter the keyword '))
     #num = int(input('Please enter the number of results '))
-
-
-
-
 
     idlist = get_PMID_file(keyword)
     print(idlist)
@@ -205,7 +201,7 @@ def already_exist(db,pmid):
     else:
         return False
 
-#scrapp_data()
+scrapp_data('data')
 
 
 

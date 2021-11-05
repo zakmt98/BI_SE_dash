@@ -1,4 +1,5 @@
-FROM alpine:latest
+FROM python:3.8-slim-buster
+
 WORKDIR /BI_project
 ADD . /BI_project
 

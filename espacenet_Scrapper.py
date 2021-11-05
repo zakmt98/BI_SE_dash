@@ -38,42 +38,55 @@ def Espacenet_scrapper(keywords):
 
     enable_download_headless(browser, download_dir)
     browser.get(url)
-    time.sleep(10)
+    time.sleep(5)
+    button = browser.find_element(By.ID,'compactLink').click()
+    time.sleep(1)
     button = browser.find_element(By.XPATH,'//*[@id="downloadCheck"]').click()
     time.sleep(3)
     button = browser.find_element(By.XPATH,'/html/body/div[1]/div[6]/div/div[2]/div[1]/ul/li[6]/a[2]').click()
 
-    time.sleep(8)
-    browser.get('chrome://downloads')
-    time.sleep(5)
-    filename = browser.execute_script(
-        "return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('div#content  #file-link').text")
+    # time.sleep(8)
+    # browser.get('chrome://downloads')
+    # time.sleep(5)
+    # filename = browser.execute_script(
+    #     "return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('div#content  #file-link').text")
 
-    csv_path = "C:\\Users\\zakaria\\PycharmProjects\\BI_project\\dataset\\espacenet\\"+filename
-    df=pd.read_csv(csv_path, error_bad_lines=False)
+    # csv_path = "C:\\Users\\zakaria\\PycharmProjects\\BI_project\\dataset\\espacenet\\"+filename
+    # df=pd.read_csv(csv_path, error_bad_lines=False)
     
-    df['keyword'] = pd.Series([keywords for x in range(len(df.index))])
-    print(df.head())
-    df.reset_index(drop=True,inplace=True)
+    # df['keyword'] = pd.Series([keywords for x in range(len(df.index))])
+    # print(df.head())
+    # df.reset_index(drop=True,inplace=True)
 
-    data= df.to_dict('records')
-    #coll.remove({})
-    coll.insert_many(data)
-    browser.get(url)
-    time.sleep(10) 
-    while browser.find_element(By.ID,'nextPageLinkTop').click():
-        
-        button = browser.find_element(By.XPATH,'//*[@id="downloadCheck"]').click()
-        time.sleep(3)
-        button = browser.find_element(By.XPATH,'/html/body/div[1]/div[6]/div/div[2]/div[1]/ul/li[6]/a[2]').click()
+    # data= df.to_dict('records')
+    # #coll.remove({})
+    # coll.insert_many(data)
+    #browser.get(url)
+    #time.sleep(5) 
+    i=0
+    k=1
+    while i==0:
+    
+        try:
+            browser.find_element(By.ID,'nextPageLinkTop').click()
+            time.sleep(3)
+            #button = browser.find_element(By.ID,'compactLink').click()
+            #time.sleep(3)
+            button = browser.find_element(By.XPATH,'//*[@id="downloadCheck"]').click()
+            time.sleep(3)
+            button = browser.find_element(By.XPATH,'/html/body/div[1]/div[6]/div/div[2]/div[1]/ul/li[6]/a[2]').click()
+            time.sleep(5)
+            k+=1
 
-        time.sleep(8)
-        browser.get('chrome://downloads')
-        time.sleep(5)
-        filename = browser.execute_script(
-            "return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('div#content  #file-link').text")
-
+        except:
+            i=1
+   
+            
+    filename = 'results.csv'
+    for i in range(2,k+2):
+        print(filename)
         csv_path = "C:\\Users\\zakaria\\PycharmProjects\\BI_project\\dataset\\espacenet\\"+filename
+        filename = 'results(page_'+str(i)+').csv'
         df=pd.read_csv(csv_path, error_bad_lines=False)
         
         df['keyword'] = pd.Series([keywords for x in range(len(df.index))])
@@ -81,10 +94,10 @@ def Espacenet_scrapper(keywords):
         df.reset_index(drop=True,inplace=True)
 
         data= df.to_dict('records')
-        #coll.remove({})
+    # #coll.remove({})
         coll.insert_many(data)
 
-
+    
     end=time.time()-begin
     return end
-time=Espacenet_scrapper('data')
+Espacenet_scrapper('scrapping data')
