@@ -29,7 +29,7 @@ def IEEE_scrapper(keywords):
     })
 
     
-    url = "https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=Keyword"
+    url = "https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=Keyword&highlight=true&returnFacets=ALL&returnType=SEARCH&matchPubs=true&ranges=2017_2022_Year"
     url = url.replace('Keyword', keywords)
 
     browser = webdriver.Chrome(chrome_options=chrome_options, executable_path=ChromeDriverManager().install())
