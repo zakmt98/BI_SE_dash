@@ -66,7 +66,7 @@ def get_PMID_file(keyword):
 def scrapp_data(keyword):
     begin=time.time()
     client = MongoClient('localhost', 27017)
-    db = client['BI_project_db']
+    db = client['BI_PROJECTS_DB']
     coll = db.PubMed_db
 
 

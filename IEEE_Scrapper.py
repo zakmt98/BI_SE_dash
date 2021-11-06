@@ -10,7 +10,7 @@ from pymongo import MongoClient
 import pandas as pd
 
 client = MongoClient('localhost', 27017)
-db = client['BI_project_db']
+db = client['BI_PROJECTS_DB']
 coll = db.IEEE_col
 def IEEE_scrapper(keywords):
     begin=time.time()

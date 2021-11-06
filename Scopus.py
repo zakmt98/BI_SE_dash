@@ -1,7 +1,4 @@
-from pandas.core.indexes.base import Index
-
-
-def scopus(keywords):
+def scopus(keywords,year):
     import time
     from selenium import webdriver
     from selenium.webdriver.support.ui import Select
@@ -9,58 +6,66 @@ def scopus(keywords):
     from webdriver_manager.utils import ChromeType
     from selenium.webdriver.common.by import By
     import pandas as pd
-    from pymongo import MongoClient
+    from pymongo import MongoClient,TEXT
     from selenium.webdriver.chrome.options import Options
+    import os
+    import glob 
+    
     begin=time.time()
     client = MongoClient('localhost', 27017)
-    col= client['BI_project_db']
+    col= client['BI_PROJECTS_DB']
     db = col.Scopus
-   
-    def already_exist(db,search):
-        if db.find({"keywords":search}).count() > 0:
-            return False
-        else:
-            return True
-       
-    if(already_exist(db,keywords)):
+    db1=col.ScopusDataBase
+    cur = db1.find()     
+    results = list(cur)  
+
+    if len(results)==0:
+        print("Empty Cursor")
     
         browser = webdriver.Chrome(executable_path=ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install())
-    
+        def enable_download_headless(browser,download_dir):
+            browser.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
+            params = {'cmd':'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': download_dir}}
+            browser.execute("send_command", params)
+        download_dir = "C:\\Users\\Aymane Hasnaoui\\Desktop\\Scopus"
+        enable_download_headless(browser, download_dir)
         browser.get("https://www.scopus.com/")
         browser.find_element_by_class_name("btn-text").click()
         browser.find_element_by_css_selector("#bdd-email").send_keys("aymane.hasnaoui1@gmail.com")
         browser.find_element_by_css_selector("#bdd-elsPrimaryBtn").click()
         browser.find_element_by_css_selector("#bdd-password").send_keys("zbalboula")
         browser.find_element_by_css_selector("#bdd-elsPrimaryBtn").click()
-        browser.find_element_by_css_selector("#gh-Sources").click()
-        browser.implicitly_wait(5)
-        browser.find_element_by_css_selector(".ui-selectmenu-text").click()
-        browser.find_element_by_css_selector("#ui-id-2").click()
-
-        browser.find_element_by_css_selector("#search-term").send_keys(keywords)
-
-        browser.find_element_by_css_selector("#searchTermsSubmit").click()
-        browser.implicitly_wait(5)
-        NoA=browser.find_element(By.ID,"resultCount").text.replace(" results","")
-        NoA=int(NoA)
-        browser.implicitly_wait(10)
-        browser.find_element(By.ID,"showAllPageBubble").click()
-        browser.implicitly_wait(300)
-        browser.find_element(By.XPATH,"//ul[@class='list-unstyled']/li").click()
-        browser.find_element(By.ID,"exportText").click()
-        time.sleep(8)
-        if(NoA>1000):
-            NoA=1000
-        df = pd.DataFrame(pd.read_excel(f"C:/Users/Aymane Hasnaoui/Downloads/{NoA}-source-results.xlsx"))
-        df['keywords']=pd.Series([keywords for i in range(len(df.index))])
-        df=df.fillna(value='None')
-
-        df_dict=df.to_dict('records')
-
-        db.insert_many(df_dict)
-
-        
+        browser.find_element_by_css_selector("#bookTitle").click()
+        time.sleep(80)
         browser.quit()
+        os.chdir('C:\\Users\\Aymane Hasnaoui\\Desktop\\Scopus')
+        extension = 'xlsx'
+        all_filenames = [i for i in glob.glob('*.{}'.format(extension))]
 
+        if len(all_filenames)!=0:
+
+            for f in all_filenames:
+                
+                df = pd.DataFrame(pd.read_excel(f"C:\\Users\\Aymane Hasnaoui\\Desktop\\Scopus\\{f}"))
+                df['keywords']=pd.Series([keywords for i in range(len(df.index))])
+                df_dict=df.to_dict('records')
+                df=df.fillna(value='None')
+                db1.create_index([("Title",TEXT)])
+                db1.insert_many(df_dict)
+                
+                
+                os.path.basename(f"C:\\Users\\Aymane Hasnaoui\\Desktop\\springer\\{f}")
+                os.remove(f) 
+        else:
+            print('file not found')
+        
+        
+    else:
+        print("pleine")
+        
+    a=db1.find({"$text":{"$search":f"\"{keywords}\""},"Publication year":year[0]})
+    for i in a:
+        db.insert_one(i)
     end=time.time()-begin
+    print(end)
     return end

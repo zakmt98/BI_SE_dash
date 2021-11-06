@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logo.png" >
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Document</title>
+    
+    <title>WebScrapping</title>
 </head>
-<body style="padding-top:10px ;">
-    <div class="form-group col-md-6" style="padding-top:12px ;margin: auto; display: block;border: solid;border-radius: 12px;border-color:darkgrey;">
+<body style="background-image: url('https://miro.medium.com/max/2800/0*44KOi9dVQ8MQuNq1.jpg'); padding-top: 170px; background-size: cover;" >
+    <div class="form-group col-md-6" style="padding-top:12px ;margin: auto; display: block;border: solid;border-radius: 12px;border-color:darkgrey; background-color:cadetblue;opacity: 0.95;">
     <form action="/Search" method="POST">
     <div class="form-row" >
         <input type="text" name="keyword" class="form-control" placeholder="Search Field"></br>
@@ -29,7 +31,20 @@
     <label>IEEE</label></br>
     
     </div>
-    <button type="submit" class="btn btn-info" style="margin: auto; display: block;margin-bottom: 10px;border-radius: 12px;">
+    <div class="form-group col-md-6">
+        <input type="radio" name="year" value = 1>
+        <label>2017</label>
+        <input type="radio" name="year" value = 2>
+        <label>2018</label>
+        <input type="radio" name="year" value = 3>
+        <label>2019</label>
+        <input type="radio" name="year" value = 4>
+        <label>2020</label>
+        <input type="radio" name="year" value = 5>
+        <label>2021</label>
+
+    </div>
+    <button type="submit" class="btn btn-outline-light" style="margin: auto; display: block;margin-bottom: 10px;border-radius: 12px;">
         Search</button>
     </div>
     </form>

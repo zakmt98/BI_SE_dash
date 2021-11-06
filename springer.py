@@ -1,4 +1,4 @@
-def springer(keywords):
+def springer(keywords,year):
 
     from selenium import webdriver
     from webdriver_manager.chrome import ChromeDriverManager
@@ -12,7 +12,7 @@ def springer(keywords):
 
     begin=time.time()
     client = MongoClient('localhost', 27017)
-    col = client['BI_project_db']
+    col = client['BI_PROJECTS_DB']
     db = col.springer
 
     
@@ -24,8 +24,7 @@ def springer(keywords):
        
     if(already_exist(db,keywords)):
 
-        sy=2015
-        ey=2017
+        
         browser = webdriver.Chrome(executable_path=ChromeDriverManager().install())
         def enable_download_headless(browser,download_dir):
             browser.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
@@ -46,7 +45,7 @@ def springer(keywords):
             msg="no"
         
         
-        for i in range(sy,ey):
+        for i in year:
             browser.find_element_by_css_selector(".expander-title").click()
             try:
                 browser.find_element_by_css_selector("#onetrust-accept-btn-handler").click()
@@ -67,13 +66,13 @@ def springer(keywords):
             browser.find_element_by_css_selector(".remove-hover").click()
             #time.sleep()
             
-            df = pd.DataFrame(pd.read_csv("C:\\Users\\Aymane Hasnaoui\\Desktop\\SearchResults.csv"))
+            df = pd.DataFrame(pd.read_csv("C:\\Users\\Aymane Hasnaoui\\Desktop\\springer\\SearchResults.csv"))
             df['keywords']=pd.Series([keywords for i in range(len(df.index))])
             df_dict=df.to_dict('records')
             db.insert_many(df_dict)
 
             df.shape
-            os.chdir('C:\Users\Aymane Hasnaoui\Desktop\\springer')
+            os.chdir('C:\\Users\\Aymane Hasnaoui\\Desktop\\springer')
             extension = 'csv'
             all_filenames = [i for i in glob.glob('*.{}'.format(extension))]
             # print(len(all_filenames))

@@ -8,7 +8,7 @@ db3=client.BI_PROJECTS_DB.Ex_time_coll
 db4=client.BI_PROJECTS_DB.History
 
 db.delete_many({})
-db1.delete_many({}) 
+#db1.delete_many({}) 
 db2.delete_many({})
 db3.delete_many({})
 db4.delete_many({})

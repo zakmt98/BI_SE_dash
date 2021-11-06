@@ -10,7 +10,7 @@ from pymongo import MongoClient
 import pandas as pd
 
 client = MongoClient('localhost', 27017)
-db = client['BI_project_db']
+db = client['BI_PROJECTS_DB']
 coll = db.espacenet_coll
 def Espacenet_scrapper(keywords):
     begin=time.time()
@@ -87,4 +87,3 @@ def Espacenet_scrapper(keywords):
 
     end=time.time()-begin
     return end
-time=Espacenet_scrapper('data')
