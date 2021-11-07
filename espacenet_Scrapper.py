@@ -40,7 +40,7 @@ def Espacenet_scrapper(keywords):
     browser.get(url)
     time.sleep(5)
     button = browser.find_element(By.ID,'compactLink').click()
-    time.sleep(1)
+    time.sleep(3)
     button = browser.find_element(By.XPATH,'//*[@id="downloadCheck"]').click()
     time.sleep(3)
     button = browser.find_element(By.XPATH,'/html/body/div[1]/div[6]/div/div[2]/div[1]/ul/li[6]/a[2]').click()
@@ -100,4 +100,3 @@ def Espacenet_scrapper(keywords):
     
     end=time.time()-begin
     return end
-Espacenet_scrapper('scrapping data')

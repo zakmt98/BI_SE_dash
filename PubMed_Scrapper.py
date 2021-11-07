@@ -28,7 +28,7 @@ def get_PMID_file(keyword):
     })
 
     keyword = keyword.replace(" ", "+")
-    url = "https://pubmed.ncbi.nlm.nih.gov/?term=Keyword"
+    url = "https://pubmed.ncbi.nlm.nih.gov/?term=Keyword&filter=datesearch.y_5"
     url = url.replace('Keyword', keyword)
 
     browser = webdriver.Chrome(chrome_options=chrome_options, executable_path=ChromeDriverManager().install())
@@ -36,8 +36,8 @@ def get_PMID_file(keyword):
 
     enable_download_headless(browser, download_dir)
     browser.get(url)
-    time.sleep(2)
-    duration = browser.find_element(By.ID,'id_filter_datesearch.y_5').click()
+    time.sleep(5)
+    # duration = browser.find_element(By.XPATH,'//*[@id="id_filter_datesearch.y_5"]').click()
     time.sleep(2)
     save = browser.find_element(By.ID,'save-results-panel-trigger').click()
     time.sleep(1)
@@ -201,7 +201,6 @@ def already_exist(db,pmid):
     else:
         return False
 
-scrapp_data('data')
 
 
 
