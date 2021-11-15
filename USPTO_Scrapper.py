@@ -12,7 +12,7 @@ def insert_todata():
 
     df=pd.read_csv(filepath, error_bad_lines=False)
     keyword = 'keyword'
-    df['keyword'] = pd.Series([keyword for x in range(len(df.index))])
+    
     print(df.head())
     df.reset_index(drop=True,inplace=True)
 
@@ -21,3 +21,4 @@ def insert_todata():
     coll.insert_many(data)
 def USPTO_Scrapper(keyword):
     return 0
+
