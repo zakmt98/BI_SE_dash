@@ -34,7 +34,7 @@ def Espacenet_scrapper(keywords):
 
     browser = webdriver.Chrome(chrome_options=chrome_options, executable_path=ChromeDriverManager().install())
 
-    download_dir = 'C:\\Users\\zakaria\\PycharmProjects\\BI_project\\dataset\\espacenet'
+    download_dir = 'C:\\Users\\zakaria\\Desktop\\BI_Project\\Dataset\\espacenet'
 
     enable_download_headless(browser, download_dir)
     browser.get(url)
@@ -85,7 +85,7 @@ def Espacenet_scrapper(keywords):
     filename = 'results.csv'
     for i in range(2,k+2):
         print(filename)
-        csv_path = "C:\\Users\\zakaria\\PycharmProjects\\BI_project\\dataset\\espacenet\\"+filename
+        csv_path = "C:\\Users\\zakaria\\Desktop\\BI_Project\\Dataset\\espacenet\\"+filename
         filename = 'results(page_'+str(i)+').csv'
         df=pd.read_csv(csv_path, error_bad_lines=False)
         

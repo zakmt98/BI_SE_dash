@@ -34,7 +34,7 @@ def IEEE_scrapper(keywords):
 
     browser = webdriver.Chrome(chrome_options=chrome_options, executable_path=ChromeDriverManager().install())
 
-    download_dir = 'C:\\Users\\zakaria\\PycharmProjects\\BI_project\\dataset\\IEEE'
+    download_dir = 'C:\\Users\\zakaria\\Desktop\\BI_Project\\Dataset\\IEEE'
 
     enable_download_headless(browser, download_dir)
     browser.get(url)
@@ -52,7 +52,7 @@ def IEEE_scrapper(keywords):
     time.sleep(5)
     filename = browser.execute_script(
         "return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('div#content  #file-link').text")
-    csv_path = "C:\\Users\\zakaria\\PycharmProjects\\BI_project\\dataset\\IEEE\\"+filename
+    csv_path = "C:\\Users\\zakaria\\Desktop\\BI_Project\\Dataset\\IEEE\\"+filename
     df=pd.read_csv(csv_path, error_bad_lines=False)
     
     df['keyword'] = pd.Series([keywords for x in range(len(df.index))])

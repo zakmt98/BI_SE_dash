@@ -32,7 +32,7 @@ def get_PMID_file(keyword):
     url = url.replace('Keyword', keyword)
 
     browser = webdriver.Chrome(chrome_options=chrome_options, executable_path=ChromeDriverManager().install())
-    download_dir = 'C:\\Users\\zakaria\\PycharmProjects\\BI_project\\dataset\\PubMed'
+    download_dir = 'C:\\Users\\zakaria\\Desktop\\BI_Project\\Dataset\\PubMed'
 
     enable_download_headless(browser, download_dir)
     browser.get(url)
@@ -56,7 +56,7 @@ def get_PMID_file(keyword):
     filename = browser.execute_script(
         "return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('div#content  #file-link').text")
     time.sleep(2)
-    file_path =  "C:\\Users\\zakaria\\PycharmProjects\\BI_project\\dataset\\PubMed\\"+filename
+    file_path =  "C:\\Users\\zakaria\\Desktop\\BI_Project\\Dataset\\PubMed\\"+filename
     file = open(file_path,'r')
     idlist = []
     for line in file:
@@ -129,6 +129,12 @@ def get_info(soup,keyword):
         abst = 'none'
 
     #print(abst)
+    MH_list=''
+    kywrd = soup.select('MeshHeadingList DescriptorName')
+    print(kywrd)
+    for i in kywrd:
+
+        MH_list = MH_list + i.text +', '
     authorlist = soup.find('authorlist')
     authors=""
     try : 
@@ -161,16 +167,28 @@ def get_info(soup,keyword):
     links=[]
     for link in link_list:
         links.append(link.find('a')['href'])
-    MH_list=[]
-    try:
-        for mh in soup.find('MeshHeadingList'):
-            try:
-                desc_name = mh.find('DescriptorName').text
-            except:
-                desc_name='none'
-            MH_list.append(desc_name)
-    except:
-        MH_list = 'none'
+    
+    print('test')
+
+    # try:
+    #     print('test')
+    #     test = soup.find_all('KeywordList')
+    #     print(test)
+    #     for mh in test :
+    #         print('test2')
+    #         try:
+    #             print('find one')
+    #             desc_name = mh.find('DescriptorName').text
+    #         except:
+    #             print(' dont find one')
+    #             desc_name='none'
+    #         MH_list.append(desc_name)
+        
+    # except:
+    #     MH_list = 'none'
+    #     print('dont find anything')
+    # print('fin test')
+ 
 
     journal_info = ''
     info=soup.find('MedlineJournalInfo')
