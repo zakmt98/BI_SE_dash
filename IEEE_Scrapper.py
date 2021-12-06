@@ -11,7 +11,7 @@ import pandas as pd
 
 client = MongoClient('localhost', 27017)
 db = client['BI_project_db']
-coll = db.IEEE_col
+coll = db.IEEE
 def IEEE_scrapper(keywords):
     begin=time.time()
     def enable_download_headless(browser, download_dir):
